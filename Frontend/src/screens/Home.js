@@ -72,6 +72,7 @@ const Home = ({navigation}) => {
 
 
           <Button title="Go to KunKun's profile" onPress={() => navigation.navigate('Profile', { name: 'KunKun' })} />
+          <Button title="Go to Login Page" onPress={() => navigation.navigate('login')} />
           {/* <Button onPress={getMethodTest} title="Get Method Test" /> */}
           <Button onPress={getMethodTest} title="Get Method Test" />
 
