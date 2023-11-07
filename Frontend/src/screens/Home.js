@@ -20,7 +20,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
+import Navbar from '../components/Navbar';
 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -92,6 +92,7 @@ const Home = ({navigation}) => {
           <LearnMoreLinks />
         </View>
       </ScrollView>
+      <Navbar />
     </SafeAreaView>
   );
 }
