@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+
 
 import {
   SafeAreaView,
@@ -8,17 +8,17 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
   Button,
+  View,
 } from 'react-native';
 
 import {
   Colors,
   DebugInstructions,
-  Header,
-  LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import Navbar from '../components/Navbar';
 
 
 
@@ -32,7 +32,7 @@ const Section = ({children, title}) => {
           {
             color: isDarkMode ? Colors.white : Colors.black,
           },
-        ]}>
+        ]}> 
         {title}
       </Text>
       <Text
@@ -64,7 +64,9 @@ const Home = ({navigation}) => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        {/* <Header /> */}
+
+
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
@@ -73,7 +75,7 @@ const Home = ({navigation}) => {
 
           <Button title="Go to KunKun's profile" onPress={() => navigation.navigate('Profile', { name: 'KunKun' })} />
           {/* <Button onPress={getMethodTest} title="Get Method Test" /> */}
-          <Button onPress={getMethodTest} title="Get Method Test" />
+
 
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
@@ -88,22 +90,34 @@ const Home = ({navigation}) => {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <LearnMoreLinks />
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
         </View>
       </ScrollView>
+
+      <Navbar />
+
+
     </SafeAreaView>
   );
 }
 
-const getMethodTest = () => {
-  axios.get('http://10.0.2.2:8800')
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-}
+// const getMethodTest = () => {
+//   axios.get('http://10.0.2.2:8800')
+//     .then(function (response) {
+//       console.log(response.data);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     })
+// }
 
 
 
