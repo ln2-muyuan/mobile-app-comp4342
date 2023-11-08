@@ -1,7 +1,9 @@
+const {connectToProductionDB,disconnectDB}= require("./config/databaseConfig");
 const express = require("express");
 const https = require('https');
 const fs = require('fs');
 const cors = require("cors");
+const bodyParser = require("body-parser")
 
 
 const app = express();
@@ -17,12 +19,25 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
+//body parser
+app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
+
+connectToProductionDB();
+
+// Close the database connection on application shutdown
+process.on('SIGINT', async () => {
+    await disconnectDB();
+    process.exit(0);
+});
 
 // const userRoutes = require("./routes/user.routes");
 // app.use("/user", userRoutes)
 // const models = require("./models");
 // models.sequelize.sync();
-app.listen(port);
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
 
 
 // const options = {
