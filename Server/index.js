@@ -4,6 +4,7 @@ const https = require('https');
 const fs = require('fs');
 const cors = require("cors");
 const bodyParser = require("body-parser")
+const indexRoute = require("./routes/index.routes")
 
 
 const app = express();
@@ -14,10 +15,8 @@ const port = 8800;
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    console.log("Received GET request")
-    res.send("Hello World!");
-});
+//routes
+app.use('', indexRoute);
 
 //body parser
 app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));

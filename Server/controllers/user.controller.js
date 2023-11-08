@@ -1,3 +1,53 @@
+const {Request,Response, NextFunction} = require("express")
+const {UserModel} = require('../models/user.model')
+
+const register = async (req, res, next) => {
+    const {username, password, nickname} = req.body;
+    try {
+        const newUser = new UserModel({
+            username,
+            password,
+            nickname
+        })
+        await newUser.save()
+        return res.status(200).json({message: "User created successfully"});
+    } catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const models = require("../models");
 // const User = models.User;
 
