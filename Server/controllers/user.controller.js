@@ -1,7 +1,9 @@
-const {Request,Response, NextFunction} = require("express")
 const {UserModel} = require('../models/user.model')
+const jwt = require('jsonwebtoken')
 
-const register = async (req, res, next) => {
+const secret = "secret"
+
+const register = async (req, res) => {
     const {username, password, nickname} = req.body;
     try {
         const newUser = new UserModel({
@@ -16,7 +18,23 @@ const register = async (req, res, next) => {
     }
 }
 
-module.exports = {register}
+const login =  async (req, res) => {
+    const {username, password} = req.body
+    try {
+        const user = await UserModel.findOne({username:username})
+        if(!user) return res.status(401).json({message: "Username or password are not correct"});
+        if(password === user.password) {
+            const token = jwt.sign({username},secret,{expiresIn:'7d'})
+            res.status(200).json({token:token});
+        } else {
+            return res.status(401).json({message: "Username or password are not correct"});
+        }
+    } catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+}
+
+module.exports = {register, secret, login}
 
 
 
