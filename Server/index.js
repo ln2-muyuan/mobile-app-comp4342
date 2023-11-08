@@ -5,6 +5,7 @@ const fs = require('fs');
 const cors = require("cors");
 const bodyParser = require("body-parser")
 const indexRoute = require("./routes/index.routes")
+const morgan = require('morgan')
 
 
 const app = express();
@@ -17,6 +18,9 @@ app.use(express.json());
 
 //routes
 app.use('', indexRoute);
+
+//log
+app.use(morgan('dev'))
 
 //body parser
 app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));
