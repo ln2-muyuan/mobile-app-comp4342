@@ -8,26 +8,29 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const Login = ({navigation}) => {
+const Register = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal: 25}}>
-        <Text style={styles.loginText}>Login</Text>
+        <Text style={styles.registerText}>Register</Text>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Username" />
         </View>
         <View style={styles.inputContainer}>
+          <TextInput placeholder="Nickname" />
+        </View>
+        <View style={styles.inputContainer}>
           <TextInput placeholder="Password" secureTextEntry={true} />
         </View>
-        <TouchableOpacity onPress={() => {}} style={styles.loginButton}>
+        <TouchableOpacity onPress={() => {}} style={styles.registerButton}>
           <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
-            Login
+            Register
           </Text>
         </TouchableOpacity>
         <View style={{flexDirection:"row",justifyContent:"center",marginTop:20}}>
-          <Text>New to the app?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color:"#AD40AF", fontWeight:'700'}}> Register</Text>
+          <Text>Having a account already?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={{color:"#AD40AF", fontWeight:'700'}}> Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  loginText: {
+  registerText: {
     fontSize: 28,
     fontWeight: '500',
     color: '#333',
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
   },
-  loginButton: {
+  registerButton: {
     marginTop:20,
     backgroundColor: '#AD40AF',
     padding: 15,
@@ -64,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
