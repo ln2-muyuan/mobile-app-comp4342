@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import * as Keychain from "react-native-keychain";
 import {
   StyleSheet,
   Text,
@@ -7,19 +8,32 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { login } from '../api/userApi';
 
 const Login = ({navigation}) => {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+  const handleLogin = () => {
+    login(email,password).then(async (res) => {
+      const token = res.token
+      console.log("login Success")
+      await Keychain.setGenericPassword(email, token);
+    }).catch((e) => {
+      console.log(e);
+    })
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal: 25}}>
         <Text style={styles.loginText}>Login</Text>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Username" />
+          <TextInput placeholder="Email" onChangeText={(text) => setEmail(text)}/>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Password" secureTextEntry={true} />
+          <TextInput placeholder="Password" secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
         </View>
-        <TouchableOpacity onPress={() => {}} style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
             Login
           </Text>

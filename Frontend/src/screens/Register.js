@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,22 +7,34 @@ import {
   TextInput,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { register } from '../api/userApi';
 
 const Register = ({navigation}) => {
+  const [username,setUsername] = useState('')
+  const [password,setPassword] = useState('')
+  const [email,setEmail] = useState('')
+
+  const handleRegister = async () => {
+    register(username,password,email).then((res) => {
+      console.log(res)
+    }).catch(e => {
+      console.log(e)
+    })
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal: 25}}>
         <Text style={styles.registerText}>Register</Text>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Username" />
+          <TextInput placeholder="Email" onChangeText={(text) => setEmail(text) }/>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Nickname" />
+          <TextInput placeholder="Username" onChangeText={(text) => setUsername(text) }/>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Password" secureTextEntry={true} />
+          <TextInput placeholder="Password" secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
         </View>
-        <TouchableOpacity onPress={() => {}} style={styles.registerButton}>
+        <TouchableOpacity onPress={handleRegister} style={styles.registerButton}>
           <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
             Register
           </Text>

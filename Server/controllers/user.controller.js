@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken')
 const secret = "secret"
 
 const register = async (req, res) => {
-    const {username, password, nickname} = req.body;
+    const {username, password, email} = req.body;
     try {
         const newUser = new UserModel({
             username,
             password,
-            nickname
+            email
         })
         await newUser.save()
         return res.status(200).json({message: "User created successfully"});
@@ -19,12 +19,12 @@ const register = async (req, res) => {
 }
 
 const login =  async (req, res) => {
-    const {username, password} = req.body
+    const {email, password} = req.body
     try {
-        const user = await UserModel.findOne({username:username})
-        if(!user) return res.status(401).json({message: "Username or password are not correct"});
+        const user = await UserModel.findOne({email:email})
+        if(!user) return res.status(401).json({message: "Email or password are not correct"});
         if(password === user.password) {
-            const token = jwt.sign({username},secret,{expiresIn:'7d'})
+            const token = jwt.sign({email},secret,{expiresIn:'7d'})
             res.status(200).json({token:token});
         } else {
             return res.status(401).json({message: "Username or password are not correct"});
