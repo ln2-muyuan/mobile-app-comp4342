@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,28 +8,38 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+
 const Login = ({navigation}) => {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{paddingHorizontal: 25}}>
+      <View style={{paddingHorizontal: 30}}>
         <Text style={styles.loginText}>Login</Text>
+
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Username" />
+          <TextInput placeholder="Email" onChangeText={(text) => setEmail(text)}/>
         </View>
+        
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Password" secureTextEntry={true} />
+          <TextInput placeholder="Password" secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
         </View>
-        <TouchableOpacity onPress={() => {}} style={styles.loginButton}>
-          <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
+        
+        <TouchableOpacity style={styles.loginButton} onPress={()=>{}}>
+          <Text style={{textAlign: 'center', color: '#fff', fontSize: 18}}>
             Login
           </Text>
         </TouchableOpacity>
-        <View style={{flexDirection:"row",justifyContent:"center",marginTop:20}}>
-          <Text>New to the app?</Text>
+        
+        <View style={{flexDirection:"row", justifyContent:"center", marginTop:20}}>
+          <Text>New to the app  ?  </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{color:"#AD40AF", fontWeight:'700'}}> Register</Text>
+            <Text style={{color:"#39A7FF"}}> Register</Text>
           </TouchableOpacity>
         </View>
+      
       </View>
     </SafeAreaView>
   );
@@ -54,8 +64,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   loginButton: {
-    marginTop:20,
-    backgroundColor: '#AD40AF',
+    marginTop:50,
+    backgroundColor: '#1640D6',
     padding: 15,
     borderRadius: 10,
     marginLeft:"auto",
