@@ -1,29 +1,32 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Navbar = () => {
-    return (
-        <View style={styles.navigationContainer}>
-            <TouchableOpacity
-            style={styles.touchableOpacity}
-            onPress={() => console.log('Button Pressed')}
-            >
-            <Text style={styles.opacityText}>Button 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-            style={styles.touchableOpacity}
-            onPress={() => console.log('Button Pressed')}
-            >
-            <Text style={styles.opacityText}>Button 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-            style={styles.touchableOpacity}
-            onPress={() => console.log('Button Pressed')}
-            >
-            <Text style={styles.opacityText}>Button 3</Text>
-            </TouchableOpacity>
-      </View>
-    );
+  const navigation = useNavigation();
+
+  return (
+      <View style={styles.navigationContainer}>
+          <TouchableOpacity
+          style={styles.touchableOpacity}
+          onPress={() => navigation.navigate('Home')}
+          >
+          <Text style={styles.opacityText}>Button 1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          style={styles.touchableOpacity}
+          onPress={() => console.log('Button Pressed')}
+          >
+          <Text style={styles.opacityText}>Button 2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+          style={styles.touchableOpacity}
+          onPress={() => navigation.navigate('Profile')}
+          >
+          <Text style={styles.opacityText}>Button 3</Text>
+          </TouchableOpacity>
+    </View>
+  );
 }
 
 
