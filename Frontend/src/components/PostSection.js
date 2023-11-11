@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
+    color: '#0F0F0F',
     fontSize: 16,
-    fontWeight: 'bold',
   },
   postTime: {
     fontSize: 12,
