@@ -21,9 +21,10 @@ const Home = ({navigation}) => {
   const singleImage = [require('../assets/bbeafc823f203f0bdc9c831a9b7bbc4.jpg')];
 
   const multipleImages = [
-    require('../assets/712b6a82944c8c89f4c3a7d58bc209d.jpg'),
-    require('../assets/ed07fa2f938947ed929aa4837f3d6b1.jpg'),
+    { id: 1, image: require('../assets/712b6a82944c8c89f4c3a7d58bc209d.jpg') },
+    { id: 2, image: require('../assets/ed07fa2f938947ed929aa4837f3d6b1.jpg') },
   ];
+
 
   
   return (
