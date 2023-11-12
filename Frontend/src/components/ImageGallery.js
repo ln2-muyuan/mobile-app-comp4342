@@ -34,16 +34,17 @@ const ImageGallery = ({ images }) => {
               <Image key={image.id} source={image.image} style={styles.doubleImage}/>
             </TouchableOpacity>
 
-            <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={true}>
+            <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={false}>
               <ImageViewer
                 imageUrls={displayedImagesList.map((img) => ({ props: { source: img.image } }))}
                 index={selectedImageIndex}
                 onCancel={() => setSelectedImageIndex(null)}
               />
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Text>Close</Text>
+                <Text style={styles.text}>Close</Text>
               </TouchableOpacity>
            </Modal>
+
           </View>
         ))} 
     </View>
@@ -71,6 +72,16 @@ const styles = StyleSheet.create({
       height: '100%',
       borderRadius: 8,
     },
+    text: {
+      color: 'white',
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      backgroundColor: 'black',
+      borderRadius: 8,
+      padding: 8,
+      margin: 16,
+    }
   });
 
 export default ImageGallery;
