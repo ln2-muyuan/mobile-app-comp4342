@@ -20,13 +20,12 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
       </View>
+      
       {hasText ? (
         <Text style={styles.contentText} numberOfLines={2} ellipsizeMode="tail">{contentText}</Text>
       ) : (
         <Text style={styles.blank}></Text>
       )}
-
-
       {hasImage && (
         <ImageGallery images={imageURL} />
       )}
