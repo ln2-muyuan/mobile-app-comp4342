@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-
+import { View, Image, TouchableOpacity, Modal, Text, StyleSheet } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import { useState } from 'react';
 
 const ImageGallery = ({ images }) => {
+
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   if (images.length === 1) {
     return (
@@ -12,14 +16,36 @@ const ImageGallery = ({ images }) => {
     );
   }
 
+
+  
   const displayedImagesList = images.slice(0, 2);
-  const displayedImages = displayedImagesList.map((image) => (
-    <Image source={image} style={styles.doubleImage} />
-  ));
+  // const displayedImages = displayedImagesList.map((image) => (
+  //   <Image key={image.id} source={image.image} style={styles.doubleImage} />
+  // ));
 
   return (
+    // <View style={styles.doubleImageContainer}>
+    //     {displayedImages}
+    // </View>
     <View style={styles.doubleImageContainer}>
-        {displayedImages}
+        {displayedImagesList.map((image, index) => (
+          <View style={styles.wrapper}>
+            <TouchableOpacity onPress={() => {setSelectedImageIndex(index); setModalVisible(true)}}>  
+              <Image key={image.id} source={image.image} style={styles.doubleImage}/>
+            </TouchableOpacity>
+
+            <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={true}>
+              <ImageViewer
+                imageUrls={displayedImagesList.map((img) => ({ props: { source: img.image } }))}
+                index={selectedImageIndex}
+                onCancel={() => setSelectedImageIndex(null)}
+              />
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text>Close</Text>
+              </TouchableOpacity>
+           </Modal>
+          </View>
+        ))} 
     </View>
   );
 };
@@ -35,9 +61,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
       },
+    wrapper: {
+        width: '49%',
+        height: 200,
+        borderRadius: 8,
+      },
     doubleImage: {
-      width: '49%',
-      height: 200,
+      width: '100%',
+      height: '100%',
       borderRadius: 8,
     },
   });

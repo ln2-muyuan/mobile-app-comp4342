@@ -21,8 +21,8 @@ const Home = ({navigation}) => {
   const singleImage = [require('../assets/微信图片_20231111174927.jpg')];
 
   const multipleImages = [
-    require('../assets/712b6a82944c8c89f4c3a7d58bc209d.jpg'),
-    require('../assets/微信图片_20231111174915.jpg'),
+    { id: 1, image: require('../assets/712b6a82944c8c89f4c3a7d58bc209d.jpg') },
+    { id: 2, image: require('../assets/微信图片_20231111174915.jpg') },
   ];
 
   
