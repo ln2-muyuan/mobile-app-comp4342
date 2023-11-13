@@ -10,9 +10,21 @@ const ImageGallery = ({ images }) => {
 
   if (images.length === 1) {
     return (
-        <View>
-            <Image source={images[0]} style={styles.singleImage} />
-        </View>
+      <View style={styles.wrapperForSingle}>
+      <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+        <Image source={images[0]} style={styles.singleImage} />
+      </TouchableOpacity>
+
+      <Modal visible={modalVisible} transparent={false}>
+        <ImageViewer
+          imageUrls={[{ props: { source: images[0] } }]}
+          index={0}
+        />
+        <TouchableOpacity onPress={() => setModalVisible(false)}>
+          <Text style={styles.text}>Close</Text>
+        </TouchableOpacity>
+      </Modal>
+    </View>
     );
   }
 
@@ -29,7 +41,7 @@ const ImageGallery = ({ images }) => {
     // </View>
     <View style={styles.doubleImageContainer}>
         {displayedImagesList.map((image, index) => (
-          <View style={styles.wrapper}>
+          <View style={styles.wrapperForDouble}>
             <TouchableOpacity onPress={() => {setSelectedImageIndex(index); setModalVisible(true)}}>  
               <Image key={image.id} source={image.image} style={styles.doubleImage}/>
             </TouchableOpacity>
@@ -52,16 +64,20 @@ const ImageGallery = ({ images }) => {
 
 
 const styles = StyleSheet.create({
+    wrapperForSingle: {
+      width: '80%',
+      height: 300
+    },
     singleImage: {
-      width: '60%',
-      height: 300,
+      width: '100%',
+      height: '100%',
       borderRadius: 8,
     },
     doubleImageContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
       },
-    wrapper: {
+    wrapperForDouble: {
         width: '49%',
         height: 200,
         borderRadius: 8,
@@ -74,4 +90,3 @@ const styles = StyleSheet.create({
   });
 
 export default ImageGallery;
-
