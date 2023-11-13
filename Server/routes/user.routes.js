@@ -9,7 +9,7 @@ router.get('/', function(req, res){
 });
 
 
-router.post('/', function(req, res){
+router.post('/register', function(req, res){
    console.log('POST received at user.route.js');
    userController.register(req, res);   
 });
