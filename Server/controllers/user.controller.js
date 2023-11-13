@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken')
 const secret = "secret"
 
 const register = async (req, res) => {
-    const {username, password, email} = req.body;
+    const {name, password, email} = req.body;
     try {
         const newUser = new UserModel({
-            username,
+            name,
             password,
             email
         })
