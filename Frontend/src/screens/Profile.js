@@ -1,30 +1,51 @@
 import React from 'react';
-import { Button, View, Text, Image, FlatList, ScrollView } from 'react-native';
+import { Button, View, Text, Image, FlatList, ScrollView,TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import Navbar from '../components/Navbar';
+import editIcon from '../assets/edit_icon.png';
 
 const Profile = ({navigation}) => {
-
+  const defaultImage = require('../assets/profile.png');
+  const [image, setImage] = React.useState(defaultImage);
   const userEmail = 'kunkun@example.com';
   const userPosts = [
     { id: '1', title: 'First Post', content: 'This is the first post.' },
     { id: '2', title: 'Second Post', content: 'This is the second post.' },
   ];
 
+  const selectImage = () => {
+    launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else {
+        setNewImage(response.assets[0]);
+        console.log(response.assets[0].base64);
+      }
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
         <Image
-          source={require('../assets/profile.png')}
+          source={image}
           style={styles.profileImage}
         />
-        <Text style={styles.userName}>KunKun</Text>
+        <View style={{display:"flex", flexDirection:"row"}}>
+          <Text style={styles.userName}>KunKun</Text>
+          <TouchableOpacity onPress={() =>navigation.navigate('EditUserInfo')}>
+            <Image
+              source={editIcon}
+              style={{ width: 20, height: 20,  marginTop:'auto',marginLeft:10}}
+            />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.userEmail}>{userEmail}</Text>
         <Button title="Go to Register Page" onPress={() => navigation.navigate('Register')} />
         <Button title="Go to Login Page" onPress={() => navigation.navigate('Login')} />
-        <Text style={{ fontSize: 20, marginTop: 10 }}>My Post</Text>
-
         <FlatList
           data={userPosts}
           keyExtractor={item => item.id}
@@ -58,7 +79,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 24, 
     fontWeight: 'bold', 
-    marginTop: 10,  
+    marginTop: 'auto',  
     color: "#000000" 
   },
   userEmail: {

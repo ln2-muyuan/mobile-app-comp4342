@@ -5,6 +5,7 @@ import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
+import EditUserInfo from './src/screens/EditUserInfo';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const App = () => {
         <Stack.Screen name="Profile" options={{headerShown:false}} component={Profile} />
         <Stack.Screen name="Login" options={{headerShown:false}} component={Login} />
         <Stack.Screen name="Register" options={{headerShown:false}} component={Register} />
+        <Stack.Screen name="EditUserInfo" options={{headerShown:true, title:"Upload Avatar"}} component={EditUserInfo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
