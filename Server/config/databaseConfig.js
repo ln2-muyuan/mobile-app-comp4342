@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {ConnectOptions} = require('mongoose')
+
 
 const connectToProductionDB = async () => {
     try {
@@ -11,7 +11,6 @@ const connectToProductionDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-
         console.log('Connected to database with url:', mongoUri);
 
     } catch (err) {
@@ -21,19 +20,5 @@ const connectToProductionDB = async () => {
     }
 };
 
-const disconnectDB = async () => {
-    try {
-        await mongoose.disconnect();
 
-        if (mongoServer) {
-            await mongoServer.stop();
-            console.log('In-memory database stopped');
-        }
-
-        console.log('Database connection closed');
-    } catch (err) {
-        console.error('Error stopping the database:', err);
-    }
-};
-
-module.exports = {connectToProductionDB, disconnectDB}
+module.exports = connectToProductionDB;

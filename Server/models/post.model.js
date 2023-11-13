@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: false
+  },
   text: {
     type: String,
     required: true
