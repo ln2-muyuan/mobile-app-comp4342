@@ -8,15 +8,34 @@ const ImageGallery = ({ images }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // if (images.length === 1) {
+  //   return (
+  //       <View>
+  //           <Image source={images[0]} style={styles.singleImage} />
+  //       </View>
+  //   );
+  // }
+
   if (images.length === 1) {
     return (
-        <View>
+        <View style={styles.wrapper}>
+          <TouchableOpacity onPress={() => {setSelectedImageIndex(0); setModalVisible(true)}}>
             <Image source={images[0]} style={styles.singleImage} />
+          </TouchableOpacity>
+  
+          <Modal visible={(selectedImageIndex === 0) && modalVisible} transparent={false}>
+            <ImageViewer
+              imageUrls={[{ props: { source: images[0] } }]}
+              index={0}
+              onCancel={() => setSelectedImageIndex(null)}
+            />
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Text style={styles.text}>Close</Text>
+            </TouchableOpacity>
+          </Modal>
         </View>
     );
   }
-
-
   
   const displayedImagesList = images.slice(0, 2);
   // const displayedImages = displayedImagesList.map((image) => (
@@ -54,8 +73,8 @@ const ImageGallery = ({ images }) => {
 
 const styles = StyleSheet.create({
     singleImage: {
-      width: '60%',
-      height: 300,
+      width: '80%',
+      height: 200,
       borderRadius: 8,
     },
     doubleImageContainer: {
