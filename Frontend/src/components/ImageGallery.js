@@ -34,7 +34,7 @@ const ImageGallery = ({ images }) => {
               <Image key={image.id} source={image.image} style={styles.doubleImage}/>
             </TouchableOpacity>
 
-            <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={true}>
+            <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={false}>
               <ImageViewer
                 imageUrls={displayedImagesList.map((img) => ({ props: { source: img.image } }))}
                 index={selectedImageIndex}

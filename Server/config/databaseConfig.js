@@ -10,8 +10,6 @@ const connectToDB = async () => {
     catch (err) {
         console.log(err);
     }
-  
 }
-
 
 module.exports = connectToDB;

@@ -1,35 +1,20 @@
-// const models = require("../models");
-// const User = models.User;
+const User = require('../models/user.model');
 
+exports.register = async function (req, res) {
+    let user = new User(
+        {
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        }
+    );
 
-// exports.create = (req, res) => {
-//     if (!req.body.email) {
-//         res.status(400).send({
-//             message: "Content can not be empty!"
-//         });
-//         return;
-//     }
-
-//     const user = {
-//         email: req.body.email,
-//         password: req.body.password
-//     };
-
-//     User.create(user)
-//         .then(data => {
-//             res.send(data);
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message:
-//                     err.message || "Some error occurred while creating the User."
-//             });
-//         });
-// }
-
-
-
-// exports.findAll = async (req, res) => {
-//     const data = await User.findAll();
-//     res.send(data);
-// }
+    try {
+        await user.save();
+        res.send("User created successfully");
+    }
+    catch (err) {
+        console.log(err);
+        res.send("User creation failed");
+    }
+}
