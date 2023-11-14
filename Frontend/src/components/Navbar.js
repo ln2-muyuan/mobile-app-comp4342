@@ -12,7 +12,7 @@ const Navbar = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Image source={require('../assets/navbar/home.png')} style={styles.buttonImage} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => console.log('Button 1 pressed')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Post')}>
         <Image source={require('../assets/navbar/plus.png')} style={styles.buttonImage} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
