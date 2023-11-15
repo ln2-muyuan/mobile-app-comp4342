@@ -1,80 +1,135 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useRef, useState } from "react";
+import { StyleSheet, Text, ScrollView } from "react-native";
+import {
+  actions,
+  defaultActions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
+import HTMLView from "react-native-htmlview";
 
-const PostScreen = ({navigation}) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
+const Post = () => {
+  const RichText = useRef(); //reference to the RichEditor component
+  const [article, setArticle] = useState("");
 
-  const handlePost = () => {
-    console.log('Title:', title);
-    console.log('Content:', content);
-    console.log('Selected Image:', selectedImage);
-  };
+  // this function will be called when the editor has been initialized
+  function editorInitializedCallback() {
+    RichText.current?.registerToolbar(function (items) {
+      // items contain all the actions that are currently active
+      console.log(
+        "Toolbar click, selected items (insert end callback):",
+        items
+      );
+    });
+  }
 
+  // Callback after height change
+  function handleHeightChange(height) {
+    // console.log("editor height change:", height);
+  }
 
-  const handleImageSelect = () => {
-    console.log('Select Image');
+  function onPressAddImage() {
+    // you can easily add images from your gallery
+    RichText.current?.insertImage(
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/100px-React-icon.svg.png"
+    );
+  }
 
-    // launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
-    //   if (response.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (response.errorCode) {
-    //     console.log('ImagePicker Error: ', response.errorMessage);
-    //   } else {
-    //     setNewImage(response.assets[0]);
-    //   }
-    // });
-}
-
-
+  function insertVideo() {
+    // you can easily add videos from your gallery
+    RichText.current?.insertVideo(
+      "https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4"
+    );
+  }
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#FFFFFF', padding: 10 }}>
-      {/* Navigation Bar */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Image source={require('../assets/left.png')} style={styles.leftImage} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handlePost}>
-          <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
-            Post
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.text}>Editor</Text>
+      <RichEditor
+        disabled={false}
+        containerStyle={styles.editor}
+        ref={RichText}
+        style={styles.rich}
+        placeholder={"Start Writing Here"}
+        onChange={(text) => setArticle(text)}
+        editorInitializedCallback={editorInitializedCallback}
+        onHeightChange={handleHeightChange}
+      />
 
-      {/* Title and Content Input */}
-      <View style={{ paddingHorizontal: 10 }}>
-        <TextInput
-          placeholder="Title (Required)"
-          value={title}
-          onChangeText={setTitle}
-          style={{ fontSize: 20, fontWeight: 'bold' }}
-        />
-        <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginVertical: 5 }} />
-        <TextInput
-          placeholder="Enter content"
-          value={content}
-          onChangeText={setContent}
-          multiline
-          style={{ fontSize: 16 }}
-        />
-      </View>
 
-      {/* Image Selection */}
-      <TouchableOpacity onPress={handleImageSelect}>
-   
-      </TouchableOpacity>
-    </View>
+      <RichToolbar
+        style={[styles.richBar]}
+        editor={RichText}
+        disabled={false}
+        iconTint={"purple"}
+        selectedIconTint={"pink"}
+        disabledIconTint={"purple"}
+        onPressAddImage={onPressAddImage}
+        iconSize={40}
+        actions={[
+          "insertVideo",
+          ...defaultActions,
+          actions.setStrikethrough,
+          actions.heading1,
+        ]}
+        // map icons for self made actions
+        iconMap={{
+          [actions.heading1]: ({ tintColor }) => ( <Text style={[styles.tib, { color: tintColor }]}>H1</Text> ),
+          [actions.setStrikethrough]: require("../assets/strikethrough.png"),
+          ["insertVideo"]: require("../assets/video.png"),
+        }}
+        insertVideo={insertVideo}
+      />
+      <Text style={styles.text}>Result</Text>
+      <HTMLView value={article} stylesheet={styles} />
+    </ScrollView>
   );
 };
 
-styles = StyleSheet.create({
-  leftImage: {
-    width: 40,
-    height: 40,
+
+
+export default Post;
+
+
+
+const styles = StyleSheet.create({
+  /********************************/
+  /* styles for html tags */
+  a: {
+    fontWeight: "bold",
+    color: "purple",
+  },
+  div: {
+    fontFamily: "monospace",
+  },
+  p: {
+    fontSize: 30,
+  },
+  /*******************************/
+  container: {
+    flex: 1,
+    marginTop: 40,
+    backgroundColor: "#F5FCFF",
+  },
+  editor: {
+    backgroundColor: "black",
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  rich: {
+    minHeight: 300,
+    flex: 1,
+  },
+  richBar: {
+    height: 50,
+    backgroundColor: "#F5FCFF",
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  tib: {
+    textAlign: "center",
+    color: "#515156",
   },
 });
-
-
-export default PostScreen;
