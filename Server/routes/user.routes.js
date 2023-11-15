@@ -15,4 +15,10 @@ router.post('/register', function(req, res){
 });
 
 
+router.post('/login', function(req, res){
+   console.log('POST received at user.route.js');
+   userController.login(req, res);   
+});
+
+
 module.exports = router;
