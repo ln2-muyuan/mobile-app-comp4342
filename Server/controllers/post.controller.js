@@ -1,6 +1,7 @@
 const Post = require('../models/post.model');
 
 exports.create = async function (req, res) {
+    console.log("whaaatttt");
     res.send("Post created successfully");
     // let post = new Post(
     //     {

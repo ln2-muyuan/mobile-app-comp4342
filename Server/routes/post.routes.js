@@ -12,10 +12,13 @@ const router = express.Router();
 
 
 // test login auth here
-router.post('/', function(req, res){
-   console.log('POST received at post.route.js');
-   loginAuth.loginAuth(req, res, postController.create);
-});
+router.post('/', loginAuth.loginAuth, postController.create);
 
+
+// test login auth here
+// router.post('/', function(req, res){
+//    console.log('POST received at post.route.js');
+//    loginAuth.loginAuth(req, res, postController.create);
+// });
 
 module.exports = router;
