@@ -7,7 +7,7 @@ import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Profile from './src/screens/Profile';
 import EditInfo from './src/screens/EditInfo';
-import Post from './src/screens/Post';
+import Post from './src/screens/PostRichText';
 
 const Stack = createNativeStackNavigator();
 
