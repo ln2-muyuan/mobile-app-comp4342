@@ -1,8 +1,8 @@
 import { post,get } from "../utils/request"
 
 const basicUrl = '/user'
-export const register = async (username,password,email) => {
-    return post(`${basicUrl}/register`, {username,password,email})
+export const register = async (name,password,email) => {
+    return post(`${basicUrl}/register`, {name,password,email})
 }
 
 export const login = async (email, password) => {
