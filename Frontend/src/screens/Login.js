@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { login } from '../api/userApi';
+import Toast from 'react-native-toast-message';
 
 const Login = ({navigation}) => {
   const [email,setEmail] = useState('')
@@ -17,10 +18,20 @@ const Login = ({navigation}) => {
   const handleLogin = () => {
     login(email,password).then(async (res) => {
       const token = res.token
-      console.log("login Success")
       await Keychain.setGenericPassword(email, token);
+      Toast.show({
+        type: 'success',
+        text1: 'Login Success',
+        text2: 'Your account login successfully'
+      })
+      navigation.navigate('Home')
     }).catch((e) => {
-      console.log(e);
+      const errorMessage = JSON.parse(e.message)
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed',
+        text2: errorMessage.message
+      })
     })
   }
   return (

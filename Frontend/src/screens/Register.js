@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { register } from '../api/userApi';
+import Toast from 'react-native-toast-message';
 
 const Register = ({navigation}) => {
   const [username,setUsername] = useState('')
@@ -16,9 +17,19 @@ const Register = ({navigation}) => {
 
   const handleRegister = async () => {
     register(username,password,email).then((res) => {
-      console.log(res)
+      Toast.show({
+        type: 'success',
+        text1: 'Register Success',
+        text2: 'Your account register successfully👋'
+      })
+      navigation.navigate('Login')
     }).catch(e => {
       console.log(e)
+      Toast.show({
+        type: 'error',
+        text1: 'Register Failed',
+        text2: 'Your account register failed'
+      })
     })
   }
   return (

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { launchImageLibrary } from 'react-native-image-picker';
 import addIcon from '../assets/add.png';
 import { updateUserInfo } from '../api/userApi';
+import Toast from 'react-native-toast-message';
 
 
 const EditUserInfo = ({navigation}) => {
@@ -24,9 +25,18 @@ const EditUserInfo = ({navigation}) => {
     const uploadImage = () => {
         if(!newImage) return;
         updateUserInfo(userEmail, `data:${newImage.type};base64,${newImage.base64}`).then(res => {
-            navigation.navigate('Profile');
+            console.log("success");
+            Toast.show({
+                type: 'success',
+                text1: 'Upload Success',
+                text2: 'Your avatar upload successfully👋'
+            });
         }).catch(err => {
-            console.log(err);
+            Toast.show({
+                type: 'error',
+                text1: 'Upload Failed',
+                text2: 'Your avatar upload failed👋'
+            });
         })
     }
 

@@ -8,6 +8,7 @@ import Register from './src/screens/Register';
 import Post from './src/screens/Post';
 import EditUserInfo from './src/screens/EditUserInfo';
 import PostDetails from './src/screens/PostDetails';
+import Toast from 'react-native-toast-message';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ const App = () => {
         <Stack.Screen name="Post" options={{headerShown:false}} component={Post} />
         <Stack.Screen name="EditUserInfo" options={{headerShown:true, title:"Upload Avatar"}} component={EditUserInfo} />
       </Stack.Navigator>
+      <Toast></Toast>
     </NavigationContainer>
   );
 }
