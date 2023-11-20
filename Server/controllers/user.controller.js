@@ -44,14 +44,15 @@ const updateUserInfo = async (req, res) => {
         if(!user) return res.status(404).json({message: "User not found"});
         user.avatar = avatar;
         await user.save();
-        return res.status(200).json({message: "User info updated successfully", user: user});
+        return res.status(200).json({message: "User info updated successfully"});
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
 }
 
 const getUserInfo = async (req, res) => {
-    const {email} = req.body;
+    //get from query
+    const {email} = req.query;
     try {
         const user = await UserModel.findOne({email:email})
         if(!user) return res.status(404).json({message: "User not found"});

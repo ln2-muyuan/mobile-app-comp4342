@@ -1,39 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, View, Text, Image, FlatList, ScrollView,TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import Navbar from '../components/Navbar';
 import editIcon from '../assets/edit_icon.png';
+import { getUserInfo } from '../api/userApi';
 
 const Profile = ({navigation}) => {
   const defaultImage = require('../assets/profile.png');
-  const [image, setImage] = React.useState(defaultImage);
-  const userEmail = 'kunkun@example.com';
+  const [image, setImage] = React.useState(null);
+  const userEmail = '08@qq.com';
   const userPosts = [
     { id: '1', title: 'First Post', content: 'This is the first post.' },
     { id: '2', title: 'Second Post', content: 'This is the second post.' },
   ];
-
-  const selectImage = () => {
-    launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.errorCode) {
-        console.log('ImagePicker Error: ', response.errorMessage);
-      } else {
-        setNewImage(response.assets[0]);
-        console.log(response.assets[0].base64);
+  useEffect(() => {
+    //get user info
+    getUserInfo(userEmail).then(res => {
+      console.log(res);
+      const user = res.user;
+      if(user.avatar) {
+        setImage(user.avatar);
       }
-    });
-  }
-
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
-        <Image
-          source={image}
-          style={styles.profileImage}
-        />
+      {
+                        image ?
+                        (<Image
+                            source={{uri: image}}
+                            style={styles.profileImage}
+                        />)
+                        :
+                        (<Image
+                            source={defaultImage}
+                            style={styles.profileImage}
+                        />)
+                    }
         <View style={{display:"flex", flexDirection:"row"}}>
           <Text style={styles.userName}>KunKun</Text>
           <TouchableOpacity onPress={() =>navigation.navigate('EditUserInfo')}>

@@ -3,11 +3,12 @@ import { Text, StyleSheet, TouchableOpacity, Image, View, Button } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { launchImageLibrary } from 'react-native-image-picker';
 import addIcon from '../assets/add.png';
+import { updateUserInfo } from '../api/userApi';
 
 
 const EditUserInfo = ({navigation}) => {
     const [newImage, setNewImage] = React.useState(null);
-
+    const userEmail = '08@qq.com'
     const selectImage = () => {
         launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
           if (response.didCancel) {
@@ -16,9 +17,20 @@ const EditUserInfo = ({navigation}) => {
             console.log('ImagePicker Error: ', response.errorMessage);
           } else {
             setNewImage(response.assets[0]);
+            console.log(response.assets[0]);
           }
         });
     }
+
+    const uploadImage = () => {
+        if(!newImage) return;
+        updateUserInfo(userEmail, `data:${newImage.type};base64,${newImage.base64}`).then(res => {
+            navigation.navigate('Profile');
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     return (
         <SafeAreaView>
             <Text style={{textAlign:"center", fontSize:20, fontWeight:"700", marginTop:20}}>
@@ -29,7 +41,7 @@ const EditUserInfo = ({navigation}) => {
                     {
                         newImage ?
                         (<Image
-                            source={{uri: newImage? newImage.uri : ""}}
+                            source={{uri: newImage? `data:${newImage.type};base64,${newImage.base64}` : ""}}
                             style={styles.avatarImage}
                         />)
                         :
@@ -41,7 +53,7 @@ const EditUserInfo = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             <View style={{marginTop:100, display:"flex", justifyContent:"center", alignItems:"center"}}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={uploadImage}>
                     <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
                         Upload
                     </Text>

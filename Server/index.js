@@ -8,16 +8,13 @@ const morgan = require('morgan')
 const app = express();
 const port = 8800;
 
-
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(express.json({limit: '50mb'}));
 
 
 app.use('/', indexRoute);
 app.use(morgan('dev'))
-
-
-app.use(bodyParser.urlencoded({extended: true,limit: '50mb'}));
-app.use(bodyParser.json({limit: '50mb'}));
 
 connectToProductionDB();
 
