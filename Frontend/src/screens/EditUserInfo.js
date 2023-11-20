@@ -17,7 +17,6 @@ const EditUserInfo = ({navigation}) => {
             console.log('ImagePicker Error: ', response.errorMessage);
           } else {
             setNewImage(response.assets[0]);
-            console.log(response.assets[0]);
           }
         });
     }
