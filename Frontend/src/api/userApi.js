@@ -17,3 +17,7 @@ export const logout = () => {
 export const getUserInfo = () => {
 
 }
+
+export const updateUserInfo = () => {
+    
+}

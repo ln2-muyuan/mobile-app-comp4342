@@ -7,7 +7,8 @@ const userSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
-      }
+      },
+    avatar: {type: String, default: null}
 });
 
 const UserModel = model('User', userSchema);

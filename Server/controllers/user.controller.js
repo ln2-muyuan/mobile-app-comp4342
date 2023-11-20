@@ -34,7 +34,40 @@ const login =  async (req, res) => {
     }
 }
 
-module.exports = {register, secret, login}
+const updateUserInfo = async (req, res) => {
+    //currently only update avatar
+    const {avatar} = req.body;
+    const {email} = req.body;
+    //find the user and update the avatar
+    try {
+        const user = await UserModel.findOne({email:email})
+        if(!user) return res.status(404).json({message: "User not found"});
+        user.avatar = avatar;
+        await user.save();
+        return res.status(200).json({message: "User info updated successfully", user: user});
+    } catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+}
+
+const getUserInfo = async (req, res) => {
+    const {email} = req.body;
+    try {
+        const user = await UserModel.findOne({email:email})
+        if(!user) return res.status(404).json({message: "User not found"});
+        //delete password
+        const userObj = {
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar
+        }
+        return res.status(200).json({message: "User info retrieved successfully", user: userObj});
+    } catch (e) {
+        return res.status(500).json({message: e.message});
+    }
+}
+
+module.exports = {register, secret, login, updateUserInfo, getUserInfo}
 
 
 

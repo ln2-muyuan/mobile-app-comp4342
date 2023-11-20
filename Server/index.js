@@ -1,4 +1,4 @@
-const {connectToProductionDB,disconnectDB}= require("./config/databaseConfig");
+const connectToProductionDB = require("./config/databaseConfig");
 const express = require("express");
 const bodyParser = require("body-parser")
 const indexRoute = require("./routes/index.routes")
