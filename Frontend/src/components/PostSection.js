@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback,TouchableOpacity } from 'react-native';
 import ImageGallery from './ImageGallery';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const PostSection = ({ userAvatar, userName, postTime, title, contentText, imageURL, videoURL }) => {
+const PostSection = ({ userAvatar, userName, postTime, title, contentText, imageURL, videoURL ,navigation }) => {
   const hasImage = Boolean(imageURL);
   const hasText = Boolean(contentText);
   const hasVideo = Boolean(videoURL);
@@ -14,8 +14,20 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
   const [duration, setDuration] = useState(0);
   const videoPlayer = useRef(null);
 
+  const handlePress = () => {
+    navigation.navigate('PostDetails', {
+      userName,
+      userAvatar,
+      postTime,
+      title,
+      contentText,
+      imageURL,
+      videoURL,
+    });
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
 
       <View style={styles.userInfo}>
         <Image source={userAvatar} style={styles.avatar} />
@@ -52,7 +64,7 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
                />
               {paused && (
                 <View style={styles.overlay}>
-                  <Icon name="play-circle-outline" size={50} color="#FFF" />
+                  <Icon name="step-forward" size={60} color="#FFF" />
                 </View>
               )}
             </View>
@@ -74,7 +86,7 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
         <ImageGallery images={imageURL} />
       )}
 
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -141,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: 50,
-    width: 80,
+    width: 70,
     height: 80,
   },
 
