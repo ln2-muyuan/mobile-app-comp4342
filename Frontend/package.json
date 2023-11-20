@@ -13,6 +13,7 @@
     "@react-native-community/slider": "^4.4.3",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.15",
+    "@react-navigation/stack": "^6.3.20",
     "axios": "^1.5.1",
     "keychain": "^1.5.0",
     "react": "18.2.0",
