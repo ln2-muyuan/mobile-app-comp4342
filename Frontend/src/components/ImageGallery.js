@@ -19,10 +19,11 @@ const ImageGallery = ({ images }) => {
         <ImageViewer
           imageUrls={[{ props: { source: images[0] } }]}
           index={0}
+          onClick={() => setModalVisible(false)} 
         />
-        <TouchableOpacity onPress={() => setModalVisible(false)}>
+        {/* <TouchableOpacity onPress={() => setModalVisible(false)}>
           <Text style={styles.text}>Close</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Modal>
     </View>
     );
@@ -51,10 +52,11 @@ const ImageGallery = ({ images }) => {
                 imageUrls={displayedImagesList.map((img) => ({ props: { source: img.image } }))}
                 index={selectedImageIndex}
                 onCancel={() => setSelectedImageIndex(null)}
+                onClick={() => setModalVisible(false)}
               />
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
+              {/* <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Text>Close</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
            </Modal>
           </View>
         ))} 

@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, Image, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, SafeAreaView, StyleSheet, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import Video from 'react-native-video';
 import Navbar from '../components/Navbar';
 
 const PostDetails = ({ route, navigation }) => {
   const { userName, userAvatar, postTime, title, contentText, imageURL, videoURL } = route.params;
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState(null);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -18,11 +21,15 @@ const PostDetails = ({ route, navigation }) => {
       </View>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.content}>{contentText}</Text>
-      {imageURL && (
+
+      {imageURL && imageURL.length > 0 && (
         imageURL.map((image, index) => (
-          <Image key={index} source={image.image} style={styles.image}/>
+         <TouchableOpacity key={index} onPress={() => {setSelectedImage(image.image ? image.image : image); setModalVisible(true);}}>
+           <Image source={image.image ? image.image : image} style={styles.image}/>
+         </TouchableOpacity>
         ))
       )}
+
       {videoURL && (
         <Video source={videoURL} 
          rate={1.0}
@@ -32,10 +39,19 @@ const PostDetails = ({ route, navigation }) => {
          shouldPlay
          isLooping
          style={styles.video}
+         paused={true}
+         controls
         />
       )}
       </ScrollView>
       <Navbar/>
+
+      <Modal visible={modalVisible} transparent={true}>
+        <TouchableOpacity style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.9)'}} onPress={() => setModalVisible(false)}>
+          <Image source={selectedImage} style={{...StyleSheet.absoluteFillObject, width: '100%', height: '100%', resizeMode: 'contain' }} />
+        </TouchableOpacity>
+      </Modal>
+
     </SafeAreaView>
   )
 }
