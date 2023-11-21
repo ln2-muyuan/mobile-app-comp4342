@@ -1,19 +1,18 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const connectToDB = require("./config/databaseConfig");
-
-const app = express();
-const port = 8800;
-
 connectToDB();
 
-app.use(express.json());
 
-app.get("/", (req, res) => {
-    console.log("Received GET request at index.js")
-    res.send("Received GET request at index.js");
-});
+const app = express();
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+const port = 8800;
 app.listen(port);
+
+
+
 
 const router = require("./routes/index.routes");
 app.use('/', router)

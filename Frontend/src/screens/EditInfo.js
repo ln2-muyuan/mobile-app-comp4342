@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { launchImageLibrary } from 'react-native-image-picker';
+import axios from 'axios';
 
 
 const EditInfo = () => {
@@ -17,6 +18,19 @@ const EditInfo = () => {
             setSelectedImage(response.assets[0]);
           }
         });
+    }
+
+    const email = "08@qq.com";
+
+    const uploadImage = async() => {
+        const avatar = selectedImage.base64;
+        await axios.post("http://10.0.2.2:8800/user/uploadAvatar", {email, avatar})
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     
@@ -46,7 +60,7 @@ const EditInfo = () => {
 
 
             <View style={{marginTop:100, display:"flex", justifyContent:"center", alignItems:"center"}}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={uploadImage}>
                     <Text style={{textAlign: 'center', fontWeight: '700', color: '#fff'}}>
                         Confirm
                     </Text>
