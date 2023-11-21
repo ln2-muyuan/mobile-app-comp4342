@@ -3,10 +3,14 @@ import { Text, StyleSheet, TouchableOpacity, Image, View, Button } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { launchImageLibrary } from 'react-native-image-picker';
 import axios from 'axios';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setAvatar } from '../store/avatarSlice';
 
 const EditInfo = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
+
+    const dispatch = useDispatch();
+    
 
     const handleImageSelect = () => {
         launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
@@ -27,6 +31,7 @@ const EditInfo = () => {
         await axios.post("http://10.0.2.2:8800/user/uploadAvatar", {email, avatar})
         .then(res => {
             console.log(res.data);
+            dispatch(setAvatar(avatar));
         })
         .catch(err => {
             console.log(err);

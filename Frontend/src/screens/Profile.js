@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
 
 const Profile = ({navigation}) => {
 
+  const avatar = useSelector((state) => state.avatar.avatar);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
-     
 
         <View style={{display:"flex", flexDirection:"row"}}>
-          <Image
+          {/* <Image
             source={require('../assets/profile.png')}
+            style={{ marginTop: 50, width: 100, height: 100, borderRadius: 50 }}
+          /> */}
+          {/* <Image 
+            source={{uri: avatar}}
+            style={{ marginTop: 50, width: 100, height: 100, borderRadius: 50 }}
+          /> */}
+          <Image 
+            source={{uri:  `data:image/png;base64,${avatar}` }}
             style={{ marginTop: 50, width: 100, height: 100, borderRadius: 50 }}
           />
           <TouchableOpacity onPress={() =>navigation.navigate('EditInfo')}>
