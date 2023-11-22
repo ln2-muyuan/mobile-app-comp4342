@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { getLatestPosts } from '../store/postSlice';
 
 const PostScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handlePost = () => {
-    console.log('Title:', title);
-    console.log('Content:', content);
-    console.log('Selected Image:', selectedImage);
+  const dispatch = useDispatch();
+
+  const handlePost = async () => {
+    try {
+      const response = await axios.get('http://10.0.2.2:8800/post');
+      // console.log('response = ', response.data);
+      dispatch(getLatestPosts(response.data));
+      // console.log('Get latest info successfully');
+    }
+    catch (error) {
+      console.log('error = ', error);
+      console.log('Have you start the server?');
+    }
   };
 
 

@@ -5,11 +5,12 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import addIcon from '../assets/add.png';
 import { updateUserInfo } from '../api/userApi';
 import Toast from 'react-native-toast-message';
-
+import { useDispatch } from 'react-redux';
+import { setAvatar } from '../store/avatarSlice';
 
 const EditUserInfo = ({navigation}) => {
     const [newImage, setNewImage] = React.useState(null);
-    const userEmail = '08@qq.com'
+    const userEmail = '1@123.dom'
     const selectImage = () => {
         launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
           if (response.didCancel) {
@@ -22,6 +23,8 @@ const EditUserInfo = ({navigation}) => {
         });
     }
 
+    const dispatch = useDispatch();
+
     const uploadImage = () => {
         if(!newImage) return;
         updateUserInfo(userEmail, `data:${newImage.type};base64,${newImage.base64}`).then(res => {
@@ -31,6 +34,7 @@ const EditUserInfo = ({navigation}) => {
                 text1: 'Upload Success',
                 text2: 'Your avatar upload successfully👋'
             });
+            dispatch(setAvatar(newImage.base64));
         }).catch(err => {
             Toast.show({
                 type: 'error',

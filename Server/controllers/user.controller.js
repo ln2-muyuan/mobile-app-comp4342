@@ -40,6 +40,7 @@ const updateUserInfo = async (req, res) => {
     const {email} = req.body;
     //find the user and update the avatar
     try {
+        console.log("heelo?")
         const user = await UserModel.findOne({email:email})
         if(!user) return res.status(404).json({message: "User not found"});
         user.avatar = avatar;

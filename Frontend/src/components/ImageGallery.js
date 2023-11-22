@@ -12,15 +12,11 @@ const ImageGallery = ({ images }) => {
     return (
       <View style={styles.wrapperForSingle}>
       <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-        <Image source={images[0]} style={styles.singleImage} />
+        <Image source={{ uri: `data:image/png;base64,${images[0]}` }} style={styles.singleImage} />
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={false}>
-        <ImageViewer
-          imageUrls={[{ props: { source: images[0] } }]}
-          index={0}
-          onClick={() => setModalVisible(false)} 
-        />
+      <ImageViewer imageUrls={[{ url: `data:image/png;base64,${images[0]}` }]} onClick={() => setModalVisible(false)}/>
         {/* <TouchableOpacity onPress={() => setModalVisible(false)}>
           <Text style={styles.text}>Close</Text>
         </TouchableOpacity> */}
@@ -44,12 +40,12 @@ const ImageGallery = ({ images }) => {
         {displayedImagesList.map((image, index) => (
           <View style={styles.wrapperForDouble}>
             <TouchableOpacity onPress={() => {setSelectedImageIndex(index); setModalVisible(true)}}>  
-              <Image key={image.id} source={image.image} style={styles.doubleImage}/>
+              <Image key={image.id} source={{ uri: `data:image/png;base64,${image}` }} style={styles.doubleImage}/>
             </TouchableOpacity>
 
             <Modal visible={(selectedImageIndex === index) && modalVisible} transparent={false}>
               <ImageViewer
-                imageUrls={displayedImagesList.map((img) => ({ props: { source: img.image } }))}
+                imageUrls = {displayedImagesList.map((img) => ({ url: `data:image/png;base64,${img}` }))}
                 index={selectedImageIndex}
                 onCancel={() => setSelectedImageIndex(null)}
                 onClick={() => setModalVisible(false)}

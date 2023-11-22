@@ -5,42 +5,30 @@ import { StyleSheet } from 'react-native';
 import Navbar from '../components/Navbar';
 import editIcon from '../assets/edit_icon.png';
 import { getUserInfo } from '../api/userApi';
+import { useSelector } from 'react-redux';
+
 
 const Profile = ({navigation}) => {
-  const defaultImage = require('../assets/profile.png');
-  const [image, setImage] = React.useState(null);
   const userEmail = '08@qq.com';
   const userPosts = [
     { id: '1', title: 'First Post', content: 'This is the first post.' },
     { id: '2', title: 'Second Post', content: 'This is the second post.' },
   ];
-  useEffect(() => {
-    //get user info
-    getUserInfo(userEmail).then(res => {
-      console.log(res);
-      const user = res.user;
-      if(user.avatar) {
-        setImage(user.avatar);
-      }
-    }).catch(err => {
-      console.log(err);
-    })
-  }, []);
+
+  const avatar = useSelector((state) => state.avatar.avatar);
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
-      {
-                        image ?
-                        (<Image
-                            source={{uri: image}}
-                            style={styles.profileImage}
-                        />)
-                        :
-                        (<Image
-                            source={defaultImage}
-                            style={styles.profileImage}
-                        />)
-                    }
+
+          <Image 
+            source={{uri:  `data:image/png;base64,${avatar}` }}
+            style={{ marginTop: 50, width: 100, height: 100, borderRadius: 50 }}
+          />
+
+
+
         <View style={{display:"flex", flexDirection:"row"}}>
           <Text style={styles.userName}>KunKun</Text>
           <TouchableOpacity onPress={() =>navigation.navigate('EditUserInfo')}>
