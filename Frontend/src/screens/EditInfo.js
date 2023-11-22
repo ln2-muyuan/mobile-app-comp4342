@@ -9,9 +9,6 @@ import { setAvatar } from '../store/avatarSlice';
 const EditInfo = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
-    const dispatch = useDispatch();
-    
-
     const handleImageSelect = () => {
         launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
           if (response.didCancel) {
@@ -24,6 +21,8 @@ const EditInfo = () => {
         });
     }
 
+
+    const dispatch = useDispatch();
     const email = "08@qq.com";
 
     const uploadImage = async() => {

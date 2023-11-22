@@ -8,7 +8,7 @@ export const avatarSlice = createSlice({
     reducers: {
         setAvatar: (state, action) => {
             state.avatar = action.payload;
-            console.log("hello")
+            console.log("user avatar updated")
         },
     },
 });

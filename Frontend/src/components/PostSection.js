@@ -10,7 +10,7 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
     <View style={styles.container}>
 
       <View style={styles.userInfo}>
-        <Image source={userAvatar} style={styles.avatar} />
+        <Image source={{uri:  `data:image/png;base64,${userAvatar}` }} style={styles.avatar} />
         <View style={flexDirection = 'column'}>
           <Text style={styles.userName}>{userName}</Text>
           <Text style={styles.postTime}>{postTime}</Text>

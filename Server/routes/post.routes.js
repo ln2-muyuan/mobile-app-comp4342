@@ -4,14 +4,9 @@ const postController = require('../controllers/post.controller');
 
 const router = express.Router();
 
-// router.get('/', function(req, res){
-//    console.log('GET received at post.route.js');
-//    res.send('GET received at user.route.js');
-// });
-
-
 
 // router.post('/', loginAuth.loginAuth, postController.test);
+router.get('/', postController.get);
 router.post('/', postController.create);
 
 
