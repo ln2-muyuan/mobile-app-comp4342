@@ -51,7 +51,7 @@ const Home = ({navigation}) => {
           <Button title="Go to Login Page" onPress={() => navigation.navigate('Login')} />
 
 
-          {posts.map((post) => ( <PostSection userName={post.content.email} userAvatar={post.avatar} postTime={processPostTime(post.content.createdAt)} title={post.content.title} contentText={post.content.text} imageURL={post.content.image}/> ))}
+          {posts.map((post) => ( <PostSection userName={post.name} userAvatar={post.avatar} postTime={processPostTime(post.content.createdAt)} title={post.content.title} contentText={post.content.text} imageURL={post.content.image}/> ))}
 
 
 

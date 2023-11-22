@@ -10,6 +10,7 @@ exports.get = async function (req, res) {
             const user = users.find((user) => user.email === post.email);
             return {
                 content: post,
+                name: user? user.name : null,
                 avatar: user? user.avatar : null,
             };
         });

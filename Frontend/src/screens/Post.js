@@ -15,10 +15,18 @@ const Post = ({navigation}) => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-    console.log('Post');
-    const response = await axios.get('http://10.0.2.2:8800/post');
-    // console.log('response = ', response.data);
-    dispatch(getLatestPosts(response.data));
+  
+    try {
+      const response = await axios.get('http://10.0.2.2:8800/post');
+         // console.log('response = ', response.data);
+      dispatch(getLatestPosts(response.data));
+      console.log('Get latest info successfully');
+    }
+    catch (error) {
+      console.log('Have you start the server?');
+    }
+
+ 
 
   };
 
