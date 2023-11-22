@@ -8,7 +8,7 @@ export const postSlice = createSlice({
     reducers: {
         getLatestPosts: (state, action) => {
             state.posts = action.payload;
-            console.log("success dispatched")
+            console.log("success dispatched");
         },
     },
 });
