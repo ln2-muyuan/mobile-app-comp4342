@@ -10,13 +10,13 @@ const Navbar = () => {
 
     <View style={styles.navbar}>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Image source={require('../assets/navbar/home.png')} style={styles.buttonImage} />
+        <Image source={require('../assets/navbar/home_icon.png')} style={styles.buttonImage} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Post')}>
-        <Image source={require('../assets/navbar/plus.png')} style={styles.buttonImage} />
+        <Image source={require('../assets/navbar/add_icon.png')} style={styles.buttonImage} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-        <Image source={require('../assets/navbar/mine.png')} style={styles.buttonImage} />
+        <Image source={require('../assets/navbar/profile_icon.png')} style={styles.buttonImage} />
       </TouchableOpacity>
     </View>
 

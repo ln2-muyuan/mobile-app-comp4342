@@ -13,7 +13,7 @@ const PostDetails = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
       <View style={styles.header}>
-        <Image source={userAvatar} style={styles.avatar}/>
+        <Image source={{uri: `data:image/png;base64,${userAvatar}`}} style={styles.avatar}/>
         <View>
           <Text style={styles.userName}>{userName}</Text>
           <Text style={styles.postTime}>{postTime}</Text>
@@ -25,7 +25,7 @@ const PostDetails = ({ route, navigation }) => {
       {imageURL && imageURL.length > 0 && (
         imageURL.map((image, index) => (
          <TouchableOpacity key={index} onPress={() => {setSelectedImage(image.image ? image.image : image); setModalVisible(true);}}>
-           <Image source={image.image ? image.image : image} style={styles.image}/>
+           <Image source={{uri: `data:image/png;base64,${image.image ? image.image : image}`}} style={styles.image}/>
          </TouchableOpacity>
         ))
       )}
@@ -48,7 +48,7 @@ const PostDetails = ({ route, navigation }) => {
 
       <Modal visible={modalVisible} transparent={true}>
         <TouchableOpacity style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.9)'}} onPress={() => setModalVisible(false)}>
-          <Image source={selectedImage} style={{...StyleSheet.absoluteFillObject, width: '100%', height: '100%', resizeMode: 'contain' }} />
+          <Image source={{uri: `data:image/png;base64,${selectedImage}`}} style={{...StyleSheet.absoluteFillObject, width: '100%', height: '100%', resizeMode: 'contain' }} />
         </TouchableOpacity>
       </Modal>
 

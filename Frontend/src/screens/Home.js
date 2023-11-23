@@ -64,7 +64,18 @@ const Home = ({navigation}) => {
           <Header />
 
 
-          {posts.map((post) => ( <PostSection userName={post.name} userAvatar={post.avatar} postTime={processPostTime(post.content.createdAt)} title={post.content.title} contentText={post.content.text} imageURL={post.content.image}/> ))}
+          {posts.map((post) => ( 
+            <PostSection 
+              userName={post.name} 
+              userAvatar={post.avatar} 
+              postTime={processPostTime(post.content.createdAt)} 
+              title={post.content.title} 
+              contentText={post.content.text} 
+              imageURL={post.content.image}
+              navigation={navigation}
+              
+              /> 
+            ))}
 
 
 
