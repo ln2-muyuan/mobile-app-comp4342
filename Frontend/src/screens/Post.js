@@ -28,15 +28,15 @@ const PostScreen = ({navigation}) => {
   const handleImageSelect = () => {
     console.log('Select Image');
 
-    // launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
-    //   if (response.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (response.errorCode) {
-    //     console.log('ImagePicker Error: ', response.errorMessage);
-    //   } else {
-    //     setNewImage(response.assets[0]);
-    //   }
-    // });
+    launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else {
+        setNewImage(response.assets[0]);
+      }
+    });
 }
 
 
@@ -45,9 +45,16 @@ const PostScreen = ({navigation}) => {
     <View style={{ flex: 1, backgroundColor: '#FFFFFF', padding: 10 }}>
       {/* Navigation Bar */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Image source={require('../assets/left.png')} style={styles.leftImage} />
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Image source={require('../assets/left.png')} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleImageSelect}>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10, marginLeft: 100 }}>
+              Select Image
+            </Text>
+          </TouchableOpacity>
+
         <TouchableOpacity onPress={handlePost}>
           <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
             Post
@@ -73,20 +80,10 @@ const PostScreen = ({navigation}) => {
         />
       </View>
 
-      {/* Image Selection */}
-      <TouchableOpacity onPress={handleImageSelect}>
-   
-      </TouchableOpacity>
     </View>
   );
 };
 
-styles = StyleSheet.create({
-  leftImage: {
-    width: 40,
-    height: 40,
-  },
-});
 
 
 export default PostScreen;
