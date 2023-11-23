@@ -43,7 +43,7 @@ const Home = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <View>
+      <View style={{height: '100%'}}>
         <ScrollView style={{flexGrow: 0.91}}>
           <Header />
 
