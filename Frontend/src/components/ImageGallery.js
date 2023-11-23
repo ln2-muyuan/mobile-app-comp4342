@@ -16,10 +16,7 @@ const ImageGallery = ({ images }) => {
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={false}>
-        <ImageViewer imageUrls={[{ url: `data:image/png;base64,${images[0]}` }]} />
-        <TouchableOpacity onPress={() => setModalVisible(false)}>
-          <Text style={styles.text}>Close</Text>
-        </TouchableOpacity>
+        <ImageViewer imageUrls={[{ url: `data:image/png;base64,${images[0]}` }]} onClick={() => setModalVisible(false)}/>
       </Modal>
     </View>
     );
@@ -31,7 +28,7 @@ const ImageGallery = ({ images }) => {
   // const displayedImages = displayedImagesList.map((image) => (
   //   <Image key={image.id} source={image.image} style={styles.doubleImage} />
   // ));
-  console.log("ImageGallery.js: displayedImagesList = ", displayedImagesList)
+
   return (
     // <View style={styles.doubleImageContainer}>
     //     {displayedImages}
@@ -49,10 +46,7 @@ const ImageGallery = ({ images }) => {
                 index={selectedImageIndex}
                 onCancel={() => setSelectedImageIndex(null)}
               /> */}
-              <ImageViewer imageUrls = {displayedImagesList.map((img) => ({ url: `data:image/png;base64,${img}` }))} index={selectedImageIndex} onCancel={() => setSelectedImageIndex(null)} />
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Text>Close</Text>
-              </TouchableOpacity>
+              <ImageViewer imageUrls = {displayedImagesList.map((img) => ({ url: `data:image/png;base64,${img}` }))} index={selectedImageIndex} onCancel={() => setSelectedImageIndex(null)} onClick={() => setModalVisible(false)}/> 
            </Modal>
           </View>
         ))} 

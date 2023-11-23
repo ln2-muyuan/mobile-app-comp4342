@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import { useDispatch } from 'react-redux';
 import { getLatestPosts } from '../store/postSlice';
 import axios from 'axios';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 
 const Post = ({navigation}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState([]);
 
 
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-  
     try {
       const response = await axios.get('http://10.0.2.2:8800/post');
          // console.log('response = ', response.data);
@@ -23,26 +22,21 @@ const Post = ({navigation}) => {
       console.log('Get latest info successfully');
     }
     catch (error) {
-      console.log('Have you start the server?');
+      console.log('Have you started the server?');
     }
-
- 
-
   };
 
 
   const handleImageSelect = () => {
-    console.log('Select Image');
-
-    // launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
-    //   if (response.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (response.errorCode) {
-    //     console.log('ImagePicker Error: ', response.errorMessage);
-    //   } else {
-    //     setNewImage(response.assets[0]);
-    //   }
-    // });
+    launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else {
+        setSelectedImage(response.assets[0]);
+      }
+    });
 }
 
 
@@ -51,9 +45,22 @@ const Post = ({navigation}) => {
     <View style={{ flex: 1, backgroundColor: '#FFFFFF', padding: 10 }}>
       {/* Navigation Bar */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+
+
+
+
+
+
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Image source={require('../assets/left.png')} style={styles.leftImage} />
+            <Image source={require('../assets/left.png')} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleImageSelect}>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10, marginLeft: 100 }}>
+              Select Image
+            </Text>
+          </TouchableOpacity>
+
         <TouchableOpacity onPress={handlePost}>
           <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
             Post
@@ -80,22 +87,11 @@ const Post = ({navigation}) => {
       </View>
 
 
-      {/* Image Selection */}
-      <TouchableOpacity onPress={handleImageSelect} style={{ alignItems: 'center', flex: 1 }}>
-        <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10, marginTop: 10 }}>
-          Select Image
-        </Text>
-      </TouchableOpacity>
+ 
     </View>
   );
 };
 
-styles = StyleSheet.create({
-  leftImage: {
-    width: 40,
-    height: 40,
-  },
-});
 
 
 export default Post;

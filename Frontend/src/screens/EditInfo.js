@@ -29,7 +29,7 @@ const EditInfo = () => {
         const avatar = selectedImage.base64;
         await axios.post("http://10.0.2.2:8800/user/uploadAvatar", {email, avatar})
         .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             dispatch(setAvatar(avatar));
         })
         .catch(err => {

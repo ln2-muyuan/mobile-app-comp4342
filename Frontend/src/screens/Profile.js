@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
+
 
 const Profile = ({navigation}) => {
 
@@ -38,6 +38,7 @@ const Profile = ({navigation}) => {
         <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 10,  color: "#1F1717" }}>
           KunKun
         </Text>
+        <Button title="Go to Login Page" onPress={() => navigation.navigate('Login')} />
         <Text style={{ fontSize: 20, marginTop: 10 }}>My Post</Text>
 
 
