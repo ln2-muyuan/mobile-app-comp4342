@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   SafeAreaView,
@@ -10,6 +10,9 @@ import Navbar from '../components/Navbar';
 import PostSection from '../components/PostSection';
 import Header from '../components/Header';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { getLatestPosts } from '../store/postSlice';
 
 const Home = ({navigation}) => {
 
@@ -19,6 +22,19 @@ const Home = ({navigation}) => {
   //   { id: 2, image: require('../assets/ed07fa2f938947ed929aa4837f3d6b1.jpg') },
   // ];
   // const videoPath = require('../assets/video1.mp4');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://10.0.2.2:8800/post');
+        dispatch(getLatestPosts(response.data));
+      } catch (error) {
+        console.log('error = ', error);
+      }
+    }
+    fetchPosts();
+  },[]);
 
 
   const posts = useSelector((state) => state.posts.posts);
