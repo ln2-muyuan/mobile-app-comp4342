@@ -5,7 +5,7 @@ const Header = () => {
   return (
     
     <ImageBackground
-      source={require('../assets/profile.png')}
+      source={require('../assets/profile.jpg')}
       style={styles.headerBackground}
       resizeMode="cover"
     >
