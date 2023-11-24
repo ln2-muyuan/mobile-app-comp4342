@@ -11,6 +11,7 @@ exports.get = async function (req, res) {
             return {
                 content: post,
                 name: user? user.name : null,
+                email: user? user.email : null,
                 avatar: user? user.avatar : null,
             };
         });
@@ -25,20 +26,25 @@ exports.get = async function (req, res) {
 
 
 exports.create = async function (req, res) {
+    console.log("post.controller.js: req.body = ", req.body);
     let post = new Post(
         {
-            text: req.body.text
+            email: req.body.email,
+            title: req.body.title,
+            text: req.body.text,
+            image: req.body.image,
+            location: req.body.location,
         }
     );
 
     try {
         console.log("post.controller.js: post = ", post);
         await post.save();
-        res.send("Post created successfully");
+        return res.status(200).json({message: "Post created successfully"});
     }
     catch (err) {
         console.log(err);
-        res.send("Post creation failed");
+        return res.status(500).json({message: err.message});
     }
 }
 

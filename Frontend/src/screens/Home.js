@@ -34,6 +34,10 @@ const Home = ({navigation}) => {
     try {
       setRefreshing(true);
       const response = await axios.get('http://10.0.2.2:8800/post');
+      //sort by createdAt
+      response.data.sort((a, b) => {
+        return new Date(b.content.createdAt) - new Date(a.content.createdAt);
+      })
       dispatch(getLatestPosts(response.data));
       console.log('Get latest info successfully')
       setRefreshing(false);
