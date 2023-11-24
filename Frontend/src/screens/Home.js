@@ -78,6 +78,8 @@ const Home = ({navigation}) => {
     }
   }
 
+  
+
   return (
     <SafeAreaView>
       <View style={{height: '100%'}}>

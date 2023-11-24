@@ -3,20 +3,33 @@ const {UserModel} = require('../models/user.model');
 
 exports.get = async function (req, res) {
     try {
-        let posts = await Post.find();
-        const emails = posts.map((post) => post.email);
-        const users = await UserModel.find({ email: { $in: emails } });
-        posts = posts.map((post) => {
-            const user = users.find((user) => user.email === post.email);
-            return {
-                content: post,
+        if (req.params.email) {
+
+            const posts = await Post.find({ email: req.params.email })
+            const user = await UserModel.findOne({ email: posts.email });
+            res.send({
+                content: posts,
                 name: user? user.name : null,
                 email: user? user.email : null,
                 avatar: user? user.avatar : null,
-            };
-        });
-
-        res.send(posts);
+            });
+            return;
+        } else {
+            let posts = await Post.find();
+            const emails = posts.map((post) => post.email);
+            const users = await UserModel.find({ email: { $in: emails } });
+            posts = posts.map((post) => {
+                const user = users.find((user) => user.email === post.email);
+                return {
+                    content: post,
+                    name: user? user.name : null,
+                    email: user? user.email : null,
+                    avatar: user? user.avatar : null,
+                };
+            });
+            res.send(posts);
+            return;
+        }
     }
     catch (err) {
         console.log(err);

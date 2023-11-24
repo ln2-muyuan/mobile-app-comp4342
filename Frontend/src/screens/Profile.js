@@ -9,13 +9,11 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { initialStateAvatar, setAvatar } from '../store/avatarSlice';
+import axios from 'axios';
+import PostSection from '../components/PostSection';
 
 
 const Profile = ({navigation}) => {
-  const userPosts = [
-    { id: '1', title: 'First Post', content: 'This is the first post.' },
-    { id: '2', title: 'Second Post', content: 'This is the second post.' },
-  ];
   const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('Visitor');
@@ -42,9 +40,51 @@ const Profile = ({navigation}) => {
     }
   }
 
+  const [userPosts, setUserPosts] = useState([]);
+
+  const fetchUserPosts = async () => {
+    if (userEmail === 'No Login') {
+      console.log("no user session");
+      return;
+    }
+    try {
+      const response = await axios.get("http://10.0.2.2:8800/post", {
+        params: {
+          email: userEmail,
+        },
+      });
+      console.log(userEmail);
+      setUserPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const processPostTime = (postTime) => {
+    const now = new Date();
+    const date = new Date(postTime);
+    const diff = now - date;
+  
+    if (diff < 3600000) { // 小于1小时
+      const minutes = Math.floor(diff / 60000);
+      return `${minutes} minutes ago`;
+    } else if (diff < 86400000) { // 小于1天
+      const hours = Math.floor(diff / 3600000);
+      return `${hours} hours ago`;
+    } else { // 大于等于1天
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return `${month}-${day}`;
+    }
+  }
+
+
   useEffect(() => {
     //get the user session first
+    console.log("useEffect");
     fetchUserInfo();
+    fetchUserPosts();
   }, [])
 
   const handleLogout = async () => {
@@ -66,7 +106,7 @@ const Profile = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, paddingHorizontal: 25}}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
         {
           isLogin ? (
             <View>
@@ -117,20 +157,22 @@ const Profile = ({navigation}) => {
             </View>
           )
         }
-        {/* <Button title="Go to Register Page" onPress={() => navigation.navigate('Register')} />
-        <Button title="Go to Login Page" onPress={() => navigation.navigate('Login')} /> */}
-        <FlatList
-          data={userPosts}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.postContainer}>
-              <Text style={styles.postTitle}>{item.title}</Text>
-              <Text style={styles.postContent}>{item.content}</Text>
-            </View>
-          )}
-        />
 
-      </View>
+        {userPosts.map((post) => ( 
+            <PostSection 
+              userName={post.name} 
+              userAvatar={post.avatar} 
+              postTime={processPostTime(post.content.createdAt)} 
+              title={post.content.title} 
+              contentText={post.content.text} 
+              imageURL={post.content.image}
+              navigation={navigation}
+              /> 
+            ))}
+
+      
+
+      </ScrollView>
       <View>
         <Navbar />
       </View>
