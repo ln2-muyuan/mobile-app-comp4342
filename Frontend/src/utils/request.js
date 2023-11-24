@@ -1,9 +1,12 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 export default async function request(method, url, body) {
+    let token = null;
     const userSession = await EncryptedStorage.getItem('userSession');
-    const userSessionObj = JSON.parse(userSession);
-    const token = userSessionObj.token;
+    if (userSession) {
+        const userSessionObj = JSON.parse(userSession);
+        token = userSessionObj.token;
+    }
     method = method.toUpperCase();
     const finalUrl = "http://10.0.2.2:8800" + url;
     if (method === 'GET') {
