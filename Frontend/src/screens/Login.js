@@ -14,6 +14,12 @@ const Login = ({navigation}) => {
   const [password,setPassword] = useState('')
 
 
+  const handleLogin = () => {
+    console.log("email = ", email)
+    console.log("password = ", password)
+    navigation.navigate('Home')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{paddingHorizontal: 30}}>
@@ -27,7 +33,7 @@ const Login = ({navigation}) => {
           <TextInput placeholder="Password" secureTextEntry={true} onChangeText={(text) => setPassword(text)}/>
         </View>
         
-        <TouchableOpacity style={styles.loginButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={{textAlign: 'center', color: '#fff', fontSize: 18}}>
             Login
           </Text>
