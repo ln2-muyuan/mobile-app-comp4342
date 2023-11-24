@@ -41,6 +41,7 @@ const Home = () => {
         visibilityTime: 2000,
       });
     } catch (error) {
+      setRefreshing(false);
       console.log('error = ', error);
     }
   }
