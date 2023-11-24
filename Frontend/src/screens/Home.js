@@ -11,6 +11,9 @@ import PostSection from '../components/PostSection';
 import Header from '../components/Header';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useState } from 'react';
+import { RefreshControl } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { getLatestPosts } from '../store/postSlice';
 
@@ -22,19 +25,39 @@ const Home = ({navigation}) => {
   //   { id: 2, image: require('../assets/ed07fa2f938947ed929aa4837f3d6b1.jpg') },
   // ];
   // const videoPath = require('../assets/video1.mp4');
+
+  const [refreshing, setRefreshing] = useState(false);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get('http://10.0.2.2:8800/post');
-        dispatch(getLatestPosts(response.data));
-      } catch (error) {
-        console.log('error = ', error);
-      }
+  
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('http://10.0.2.2:8800/post');
+      dispatch(getLatestPosts(response.data));
+      Toast.show({
+        type: 'success',
+        text1: 'Get latest posts successfully',
+      });
+    } catch (error) {
+      console.log('error = ', error);
     }
+  }
+  
+  
+  useEffect(() => {
     fetchPosts();
   },[]);
+
+
+  onRefresh = () => {
+    setRefreshing(true);
+    fetchPosts();
+    setRefreshing(false);
+  }
+
+
+
 
 
   const posts = useSelector((state) => state.posts.posts);
@@ -60,7 +83,7 @@ const Home = ({navigation}) => {
   return (
     <SafeAreaView>
       <View style={{height: '100%'}}>
-        <ScrollView style={{flexGrow: 0.91}}>
+        <ScrollView style={{flexGrow: 0.90}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <Header />
 
 
@@ -73,7 +96,6 @@ const Home = ({navigation}) => {
               contentText={post.content.text} 
               imageURL={post.content.image}
               navigation={navigation}
-              
               /> 
             ))}
 
