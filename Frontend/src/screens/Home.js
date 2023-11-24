@@ -35,10 +35,12 @@ const Home = ({navigation}) => {
     try {
       const response = await axios.get('http://10.0.2.2:8800/post');
       dispatch(getLatestPosts(response.data));
+      setRefreshing(false);
       Toast.show({
         type: 'success',
         text1: 'Get latest posts successfully',
       });
+      
     } catch (error) {
       console.log('error = ', error);
     }
@@ -50,10 +52,9 @@ const Home = ({navigation}) => {
   },[]);
 
 
-  onRefresh = () => {
+  const onRefresh = () => {
     setRefreshing(true);
     fetchPosts();
-    setRefreshing(false);
   }
 
 
