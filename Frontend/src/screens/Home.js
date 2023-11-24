@@ -67,7 +67,7 @@ const Home = ({navigation}) => {
   
     if (diff < 3600000) { // 小于1小时
       const minutes = Math.floor(diff / 60000);
-      return `${minutes} minutes ago`;
+      return `${minutes+1} minutes ago`;
     } else if (diff < 86400000) { // 小于1天
       const hours = Math.floor(diff / 3600000);
       return `${hours} hours ago`;

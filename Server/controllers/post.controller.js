@@ -3,17 +3,19 @@ const {UserModel} = require('../models/user.model');
 
 exports.get = async function (req, res) {
     try {
-        if (req.params.email) {
-
-            const posts = await Post.find({ email: req.params.email })
-            const user = await UserModel.findOne({ email: posts.email });
-            res.send({
-                content: posts,
-                name: user? user.name : null,
-                email: user? user.email : null,
-                avatar: user? user.avatar : null,
-            });
-            return;
+        if (req.query.email) {
+            console.log("post.controller.js: req.query.email = ", req.query.email);
+            const posts = await Post.find({ email: req.query.email })
+            const user = await UserModel.findOne({ email: req.query.email });
+            const usedPosts = posts.map((post) => {
+                return {
+                    content: post,
+                    name: user? user.name : null,
+                    email: user? user.email : null,
+                    avatar: user? user.avatar : null,
+                };
+            })
+            return res.status(200).json({posts:usedPosts});
         } else {
             let posts = await Post.find();
             const emails = posts.map((post) => post.email);

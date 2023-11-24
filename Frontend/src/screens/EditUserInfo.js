@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -7,10 +7,12 @@ import { updateUserInfo } from '../api/userApi';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { setAvatar } from '../store/avatarSlice';
+import EncryptedStorage from 'react-native-encrypted-storage';
+
 
 const EditUserInfo = ({navigation}) => {
     const [newImage, setNewImage] = React.useState(null);
-    const userEmail = '1@123.dom'
+    const [userEmail, setUserEmail] = React.useState(null);
     const selectImage = () => {
         launchImageLibrary({ mediaType: 'photo', includeBase64:true }, (response) => {
           if (response.didCancel) {
@@ -24,8 +26,29 @@ const EditUserInfo = ({navigation}) => {
     }
 
     const dispatch = useDispatch();
-
-    const uploadImage = () => {
+    
+    useEffect(() => {
+        //get userSession
+        async function fetchUserInfo() {
+            try {
+              const userSession = await EncryptedStorage.getItem('userSession');
+              if (userSession !== null) {
+                const userSessionObj = JSON.parse(userSession);
+                const token = userSessionObj.token;
+                const name = userSessionObj.name;
+                const email = userSessionObj.email;
+                setUserEmail(email);
+              }
+              else {
+                console.log("no user session");
+              }
+            } catch (error) {
+              console.log(error);
+            }
+        }
+        fetchUserInfo();
+    },[])
+    const uploadImage = async () => {
         if(!newImage) return;
         updateUserInfo(userEmail, `${newImage.base64}`).then(res => {
             console.log("success");

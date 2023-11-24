@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux';
 import { initialStateAvatar, setAvatar } from '../store/avatarSlice';
 import axios from 'axios';
 import PostSection from '../components/PostSection';
+import { get } from '../utils/request';
+import { getPosts } from '../api/postApi';
 
 
 const Profile = ({navigation}) => {
@@ -43,18 +45,25 @@ const Profile = ({navigation}) => {
   const [userPosts, setUserPosts] = useState([]);
 
   const fetchUserPosts = async () => {
-    if (userEmail === 'No Login') {
-      console.log("no user session");
-      return;
-    }
     try {
-      const response = await axios.get("http://10.0.2.2:8800/post", {
-        params: {
-          email: userEmail,
-        },
+      let email = null;
+      //get user email from userSession
+      const userSession = await EncryptedStorage.getItem('userSession');
+      if (userSession !== null) {
+        const userSessionObj = JSON.parse(userSession);
+        const token = userSessionObj.token;
+        email = userSessionObj.email;
+      }
+      else {
+        return;
+      }
+      console.log("Current email", email);
+      const response = await getPosts(email);
+      //sort the post by createdAt
+      response.posts.sort((a, b) => {
+        return new Date(b.content.createdAt) - new Date(a.content.createdAt);
       });
-      console.log(userEmail);
-      setUserPosts(response.data);
+      setUserPosts(response.posts);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +77,7 @@ const Profile = ({navigation}) => {
   
     if (diff < 3600000) { // 小于1小时
       const minutes = Math.floor(diff / 60000);
-      return `${minutes} minutes ago`;
+      return `${minutes+1} minutes ago`;
     } else if (diff < 86400000) { // 小于1天
       const hours = Math.floor(diff / 3600000);
       return `${hours} hours ago`;
@@ -93,6 +102,7 @@ const Profile = ({navigation}) => {
       setIsLogin(false);
       setUserEmail('No Login');
       setUserName('Visitor');
+      setUserPosts([]);
       dispatch(setAvatar(initialStateAvatar));
       Toast.show({
         type: 'success',
@@ -105,8 +115,8 @@ const Profile = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={{ flex: 1, paddingHorizontal: 25}}>
+    <SafeAreaView>
+      <ScrollView style={{ paddingHorizontal: 10, flexGrow:0.90,height:"100%"}}>
         {
           isLogin ? (
             <View>
@@ -157,7 +167,9 @@ const Profile = ({navigation}) => {
             </View>
           )
         }
-
+        <View style={{marginTop:20}}>
+          <Text style={{fontSize:20, fontWeight:"700", marginBottom:10,color:'#000'}}>My Posts</Text>
+        </View>
         {userPosts.map((post) => ( 
             <PostSection 
               userName={post.name} 
@@ -169,13 +181,8 @@ const Profile = ({navigation}) => {
               navigation={navigation}
               /> 
             ))}
-
-      
-
       </ScrollView>
-      <View>
-        <Navbar />
-      </View>
+      <Navbar />
     </SafeAreaView>
   );
 };
@@ -183,6 +190,7 @@ const Profile = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
     backgroundColor: '#FFFFFF', 
   },
   profileImage: {
