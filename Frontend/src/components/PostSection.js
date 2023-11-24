@@ -5,7 +5,8 @@ import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const PostSection = ({ userAvatar, userName, postTime, title, contentText, imageURL, videoURL ,navigation }) => {
+const PostSection = ({ userAvatar, userName, postTime, title, contentText, imageURL, videoURL ,navigation, location }) => {
+  console.log('location = ', location);
   const hasImage = Boolean(imageURL);
   const hasText = Boolean(contentText);
   const hasVideo = Boolean(videoURL);
@@ -85,7 +86,9 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
       {hasImage && (
         <ImageGallery images={imageURL} />
       )}
-
+      {
+        location? <Text style={{fontSize:14,marginTop:10}} numberOfLines={2} ellipsizeMode="tail"><Text style={{color:"#000",fontWeight:"500"}}>Location:</Text> {location}</Text>:<Text style={styles.blank}></Text>
+      }
     </TouchableOpacity>
   );
 };

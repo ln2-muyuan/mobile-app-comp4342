@@ -8,7 +8,7 @@ export default async function request(method, url, body) {
         token = userSessionObj.token;
     }
     method = method.toUpperCase();
-    const finalUrl = "http://10.0.2.2:8800" + url;
+    const finalUrl = "https://test2-vcdx.onrender.com" + url;
     if (method === 'GET') {
         body = undefined;
     } else {

@@ -5,7 +5,7 @@ import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { getLatestPosts } from '../store/postSlice';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary,launchCamera } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Geolocation from 'react-native-geolocation-service';
 import { createPost } from '../api/postApi';
@@ -157,6 +157,27 @@ const PostScreen = ({navigation}) => {
     });
   }
 
+  const handleTakePicture = () => {
+    launchCamera({ mediaType: 'photo', includeBase64:true }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled take picture');
+      } else if (response.errorCode) {
+        console.log('Take Picture: ', response.errorMessage);
+      } else {
+        //max 4 images
+        if(images.length >= 4) {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'You can only upload up to 4 images'
+          })
+          return;
+        };
+        setImages([...images, response.assets[0].base64]);
+      }
+    });
+  }
+
   const handleCheckboxChange = () => {
     const select = !isSelected;
     if (select) {
@@ -177,13 +198,18 @@ const PostScreen = ({navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => setImages([])}>
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
               Clear Images
             </Text>
           </TouchableOpacity>
         <TouchableOpacity onPress={handleImageSelect}>
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 20, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
               Select Image
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleTakePicture}>
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
+              Take Image
             </Text>
           </TouchableOpacity>
       </View>
