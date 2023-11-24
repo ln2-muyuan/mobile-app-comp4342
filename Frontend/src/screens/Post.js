@@ -209,7 +209,7 @@ const PostScreen = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={handleTakePicture}>
             <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15, borderWidth: 1, borderColor: 'black', padding: 8, borderRadius: 10 }}>
-              Take Image
+              Take Picture
             </Text>
           </TouchableOpacity>
       </View>
