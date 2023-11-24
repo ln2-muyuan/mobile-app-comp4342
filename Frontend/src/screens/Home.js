@@ -4,12 +4,17 @@ import {
   SafeAreaView,
   ScrollView,
   View,
+  RefreshControl,
 } from 'react-native';
-
 import Navbar from '../components/Navbar';
 import PostSection from '../components/PostSection';
 import Header from '../components/Header';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLatestPosts } from '../store/postSlice';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
+
 
 
 const Home = () => {
@@ -19,6 +24,34 @@ const Home = () => {
   //   { id: 1, image: require('../assets/712b6a82944c8c89f4c3a7d58bc209d.jpg') },
   //   { id: 2, image: require('../assets/微信图片_20231111174915.jpg') },
   // ];
+
+  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useDispatch();
+
+    
+  useEffect(() => {
+    fetchPosts();
+  },[]);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('http://10.0.2.2:8800/post');
+      dispatch(getLatestPosts(response.data));
+      Toast.show({
+        type: 'success',
+        text1: 'Get latest posts successfully',
+      });
+    } catch (error) {
+      console.log('error = ', error);
+    }
+  }
+
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchPosts();
+    setRefreshing(false);
+  }
 
   const posts = useSelector((state) => state.posts.posts);
 
@@ -45,7 +78,7 @@ const Home = () => {
   return (
     <SafeAreaView>
       <View style={{height: "100%"}}>
-        <ScrollView style={{flexGrow: 0.90}}>
+        <ScrollView style={{flexGrow: 0.90}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <Header/>
       
 

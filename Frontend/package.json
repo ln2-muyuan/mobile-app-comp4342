@@ -21,6 +21,7 @@
     "react-native-pell-rich-editor": "^1.9.0",
     "react-native-safe-area-context": "^4.7.3",
     "react-native-screens": "^3.26.0",
+    "react-native-toast-message": "^2.1.7",
     "react-native-webview": "^13.6.2",
     "react-redux": "^8.1.3"
   },
