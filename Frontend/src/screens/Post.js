@@ -3,6 +3,7 @@ import { View, TextInput, Text, TouchableOpacity, Image, StyleSheet } from 'reac
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { getLatestPosts } from '../store/postSlice';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const PostScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
@@ -24,6 +25,7 @@ const PostScreen = ({navigation}) => {
     }
   };
 
+  
 
   const handleImageSelect = () => {
     console.log('Select Image');
@@ -34,7 +36,7 @@ const PostScreen = ({navigation}) => {
       } else if (response.errorCode) {
         console.log('ImagePicker Error: ', response.errorMessage);
       } else {
-        setNewImage(response.assets[0]);
+        setSelectedImage(response.assets[0]);
       }
     });
 }
