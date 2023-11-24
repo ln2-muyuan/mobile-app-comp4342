@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as Keychain from "react-native-keychain";
 import {
   StyleSheet,
   Text,
@@ -10,15 +9,32 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import { login } from '../api/userApi';
 import Toast from 'react-native-toast-message';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { useDispatch } from 'react-redux';
+import { setAvatar } from '../store/avatarSlice';
 
 const Login = ({navigation}) => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
-
+  const dispatch = useDispatch();
   const handleLogin = () => {
     login(email,password).then(async (res) => {
       const token = res.token
-      await Keychain.setGenericPassword(email, token);
+      try {
+        await EncryptedStorage.setItem(
+          'userSession',
+          JSON.stringify({
+            email: res.email,
+            token: res.token,
+            name: res.name,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      if (res.avatar) {
+        dispatch(setAvatar(res.avatar));
+      }
       Toast.show({
         type: 'success',
         text1: 'Login Success',

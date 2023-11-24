@@ -27,7 +27,7 @@ const EditUserInfo = ({navigation}) => {
 
     const uploadImage = () => {
         if(!newImage) return;
-        updateUserInfo(userEmail, `data:${newImage.type};base64,${newImage.base64}`).then(res => {
+        updateUserInfo(userEmail, `${newImage.base64}`).then(res => {
             console.log("success");
             Toast.show({
                 type: 'success',

@@ -25,7 +25,7 @@ const login =  async (req, res) => {
         if(!user) return res.status(401).json({message: "Email or password are not correct"});
         if(password === user.password) {
             const token = jwt.sign({email},secret,{expiresIn:'7d'})
-            res.status(200).json({token:token});
+            res.status(200).json({token:token,name:user.name, email:user.email, avatar:user.avatar});
         } else {
             return res.status(401).json({message: "Username or password are not correct"});
         }
@@ -40,7 +40,6 @@ const updateUserInfo = async (req, res) => {
     const {email} = req.body;
     //find the user and update the avatar
     try {
-        console.log("heelo?")
         const user = await UserModel.findOne({email:email})
         if(!user) return res.status(404).json({message: "User not found"});
         user.avatar = avatar;

@@ -1,8 +1,9 @@
-import * as Keychain from "react-native-keychain";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export default async function request(method, url, body) {
-    const credentials = await Keychain.getGenericPassword();
-    const token = credentials.password
+    const userSession = await EncryptedStorage.getItem('userSession');
+    const userSessionObj = JSON.parse(userSession);
+    const token = userSessionObj.token;
     method = method.toUpperCase();
     const finalUrl = "http://10.0.2.2:8800" + url;
     if (method === 'GET') {
