@@ -28,30 +28,32 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
 
-    
-  useEffect(() => {
-    fetchPosts();
-  },[]);
-
   const fetchPosts = async () => {
     try {
+      setRefreshing(true);
       const response = await axios.get('http://10.0.2.2:8800/post');
       dispatch(getLatestPosts(response.data));
+      console.log('Get latest info successfully')
+      setRefreshing(false);
       Toast.show({
         type: 'success',
         text1: 'Get latest posts successfully',
+        visibilityTime: 2000,
       });
     } catch (error) {
       console.log('error = ', error);
     }
   }
+  
+  useEffect(() => {
+    fetchPosts();
+  },[]);
 
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchPosts();
-    setRefreshing(false);
-  }
+
+
+
+
 
   const posts = useSelector((state) => state.posts.posts);
 
@@ -78,7 +80,7 @@ const Home = () => {
   return (
     <SafeAreaView>
       <View style={{height: "100%"}}>
-        <ScrollView style={{flexGrow: 0.90}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        <ScrollView style={{flexGrow: 0.90}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchPosts} />}>
           <Header/>
       
 

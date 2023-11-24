@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import ImageGallery from './ImageGallery';
+import { useNavigation } from '@react-navigation/native';
 
-const PostSection = ({ userAvatar, userName, postTime, title, contentText, imageURL }) => {
+const PostSection = ({  userName, userAvatar, postTime, title, contentText, imageURL }) => {
   const hasImage = Boolean(imageURL);
   const hasText = Boolean(contentText);
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('PostPageDetails', { userAvatar, userName, postTime, title, contentText, imageURL })}>
 
       <View style={styles.userInfo}>
         <Image source={{uri:  `data:image/png;base64,${userAvatar}` }} style={styles.avatar} />
@@ -30,7 +32,7 @@ const PostSection = ({ userAvatar, userName, postTime, title, contentText, image
         <ImageGallery images={imageURL} />
       )}
 
-    </View>
+    </TouchableOpacity>
   );
 };
 
