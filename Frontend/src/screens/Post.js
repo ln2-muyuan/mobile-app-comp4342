@@ -49,8 +49,8 @@ const PostScreen = ({navigation}) => {
       );
       // {response.data.display_name} address: {road, city, county, state,country}
       if (response.data && response.data.address) {
-        const { city, county, state, country } = response.data.address;
-        setPlaceName(`${city}, ${county}, ${state}, ${country}`);
+        const { city, state, country } = response.data.address;
+        setPlaceName(`${city}, ${state}, ${country}`);
       }
     } catch (error) {
       console.log('Error fetching city information:', error);
