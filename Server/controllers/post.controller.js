@@ -1,5 +1,7 @@
 const Post = require('../models/post.model');
 const {UserModel} = require('../models/user.model');
+const jwt = require('jsonwebtoken')
+const {secret} = require('./user.controller')
 
 exports.get = async function (req, res) {
     try {
@@ -42,9 +44,24 @@ exports.get = async function (req, res) {
 
 exports.create = async function (req, res) {
     console.log("post.controller.js: req.body = ", req.body);
+    const authHeader = req.get("Authorization");
+    if (!authHeader) {
+        return res.status(401).json({ message: 'not authenticated' });
+    };
+    const token = authHeader.split(' ')[1];
+    let decodedToken;
+    try {
+        decodedToken = await jwt.verify(token, secret);
+        if (!decodedToken) {
+            return res.status(401).json({ message: 'unauthorized' });
+        } 
+    } catch (e) {
+        return res.status(500).json({ message: e.message });
+    };
+    console.log("post.controller.js: decodedToken = ", decodedToken);
     let post = new Post(
         {
-            email: req.body.email,
+            email: decodedToken.email,
             title: req.body.title,
             text: req.body.text,
             image: req.body.image,
