@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
+require('dotenv').config()
 
+const mongoUri = process.env.MONGODB_URL;
 const connectToProductionDB = async () => {
     try {
         console.log('Connecting to  database...');
-
-        const mongoUri = "mongodb+srv://ln2:gCbZGhxIgACsy2nD@cluster0.2nhh6kl.mongodb.net/?retryWrites=true&w=majority";
-
+        
          await mongoose.connect(mongoUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
