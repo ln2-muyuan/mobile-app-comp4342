@@ -1,9 +1,11 @@
 ## View Demo
   <p>
+    <br />
     Tested on Huawei mate 20
     <br />
-    <br />
     <a href="https://www.bilibili.com/video/BV1fK41187Mi/">View Demo</a>
+    <br />    
+    <br />
   </p>
 
 
