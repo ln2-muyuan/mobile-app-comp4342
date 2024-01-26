@@ -1,4 +1,18 @@
-# comp4342-project
-Report: https://docs.google.com/document/d/16UbFBeIzd92nOaVc0LYdJZEZZqY7W5Q98GwBeWyttgo/edit?pli=1
-installation guide: 
+## Getting Started
 
+### Frontend Setup
+  ```sh
+cd Frontend
+npm install
+npm run android
+  ```
+
+
+### Backend Setup
+
+create a .env file in the Server folder and add your MONGODB_URL
+  ```sh
+cd Server
+npm install
+npm start
+  ```
