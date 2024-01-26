@@ -1,18 +1,12 @@
 ## View Demo
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+  <p>
+    Tested on Huawei mate 20
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://www.bilibili.com/video/BV1fK41187Mi/">View Demo</a>
   </p>
 
-tested on Huawei mate 20
+
 
 ## Getting Started
 
