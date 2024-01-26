@@ -1,6 +1,7 @@
 ## View Demo
-![Demo](https://www.baidu.com/)
+![Demo](https://www.bilibili.com/video/BV1fK41187Mi/)
 
+tested on Huawei mate 20
 
 ## Getting Started
 
