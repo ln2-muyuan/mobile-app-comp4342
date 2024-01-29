@@ -1,6 +1,7 @@
 ## Demo
   <p>
     <br />
+    A full stack social media mobile app.
     Tested on Huawei mate 20
     <br />
     <br />
@@ -31,6 +32,7 @@ cd Server
 npm install
 npm start
   ```
+
 
 You need to create a .env file in the Server folder and add your MONGODB_URL to connect to your database
 
