@@ -24,16 +24,16 @@ npm run android
 
 
 ### Backend Setup
-Express.js
+Express.js + MongoDB
 
-create a .env file in the Server folder and add your MONGODB_URL
   ```sh
 cd Server
 npm install
 npm start
   ```
 
+You need to create a .env file in the Server folder and add your MONGODB_URL to connect to your database
 
-When you want to connect your frontend with your own backend, remember to change the http request domain to your own backend. You need to configure two place.
+If you want to connect your frontend with your own backend, you need to change the http request domain to your own backend. You need to configure two place.
 1. Frontend/src/utils/request.js: change the domain url in line 11 to your own url
 2. Frontend/src/screens/Home.js change the domain url in line 36
