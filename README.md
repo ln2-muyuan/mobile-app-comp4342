@@ -2,6 +2,8 @@
   <p>
     <br />
     A full stack social media mobile app.
+    <br />
+    <br />
     Tested on Huawei mate 20
     <br />
     <br />
@@ -16,6 +18,8 @@
 
 ### Frontend Setup
 React Native， version 0.72
+
+Redux for state control
 
   ```sh
 cd Frontend
