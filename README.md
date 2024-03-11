@@ -18,6 +18,7 @@
 React Native， version 0.72
 
 Core packages including:
+
 Redux: for front-end state control
 Axios: for http request between front-end and back-end
 
