@@ -1,7 +1,7 @@
 ## Demo
   <p>
     <br />
-    A full stack social media mobile app.
+    A full stack social media mobile app for course COMP4342 projects.
     <br />
     <br />
     Tested on Huawei mate 20: 
